@@ -1,6 +1,6 @@
 import * as cookieParser from 'cookie-parser';
 import { createLogger } from 'winston';
-import { APP_INTERCEPTOR, NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { ConfigService } from './config';
 import { getLoggingConfig, WinstonLoggerService } from './logger';
 import { AppModule } from './app.module';
@@ -15,13 +15,13 @@ async function bootstrap() {
     bufferLogs: true,
   });
 
+  const config = app.get<ConfigService>(ConfigService);
+  const { port } = config.app;
+
   app.flushLogs();
   app.use(cookieParser());
   app.setGlobalPrefix('/api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-
-  const config = app.get<ConfigService>(ConfigService);
-  const { port } = config.app;
 
   await app.listen(port);
 }
