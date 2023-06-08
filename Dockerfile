@@ -10,6 +10,7 @@ RUN pnpm install --ignore-scripts
 COPY src src
 COPY prisma prisma
 
+RUN pnpm prisma:generate
 RUN npm run build
 
 FROM node:18

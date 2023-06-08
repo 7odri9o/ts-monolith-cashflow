@@ -8,9 +8,10 @@ import {
 import { ConfigModule, ConfigService } from './config';
 import { LoggerMiddleware } from './middlewares';
 import { HealthcheckModule } from './healthcheck';
+import { UsersModule } from './users';
 
 @Module({
-  imports: [ConfigModule, HealthcheckModule],
+  imports: [ConfigModule, HealthcheckModule, UsersModule],
 })
 export class AppModule implements NestModule {
   private readonly logger = new Logger(AppModule.name);
