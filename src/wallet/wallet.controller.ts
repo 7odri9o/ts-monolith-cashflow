@@ -1,4 +1,6 @@
 import { Request } from 'express';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { CacheKey } from '@nestjs/cache-manager';
 import {
   Controller,
   ForbiddenException,
@@ -8,7 +10,6 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { JwtValidation } from '@/jwt';
 import { WalletService } from './wallet.service';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
@@ -21,6 +22,7 @@ export class WalletController {
   ) {}
 
   @Get()
+  @CacheKey('/wallet')
   async get(@Req() { cookies }: Request) {
     const jwt = cookies.Authentication;
     if (!jwt) {
@@ -38,7 +40,7 @@ export class WalletController {
   }
 
   @MessagePattern('update_wallet')
-  @UsePipes(new ValidationPipe())
+  @UsePipes(new ValidationPipe({ transform: true }))
   async update(@Payload() data: UpdateWalletDto) {
     return this.walletService[data.operation](data.transaction);
   }

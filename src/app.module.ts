@@ -1,3 +1,5 @@
+import { redisStore } from 'cache-manager-redis-store';
+import type { RedisClientOptions } from 'redis';
 import {
   Module,
   Logger,
@@ -5,6 +7,7 @@ import {
   RequestMethod,
   NestModule,
 } from '@nestjs/common';
+import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from './config';
 import { LoggerMiddleware } from './middlewares';
 import { AuthModule } from './auth';
@@ -23,6 +26,17 @@ import { WalletModule } from './wallet';
     CashInModule,
     CashOutModule,
     WalletModule,
+    CacheModule.registerAsync<RedisClientOptions>({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        ttl: configService.cache.ttl,
+        store: (await redisStore({
+          url: configService.cache.url,
+        })) as unknown as CacheStore,
+      }),
+    }),
   ],
 })
 export class AppModule implements NestModule {

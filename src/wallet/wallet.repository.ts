@@ -31,6 +31,11 @@ export class WalletRepository {
       where: {
         id,
       },
+      select: {
+        date: true,
+        value: true,
+        updatedAt: true,
+      },
     });
   }
 
@@ -45,6 +50,11 @@ export class WalletRepository {
       },
       where: {
         id,
+      },
+      select: {
+        date: true,
+        value: true,
+        updatedAt: true,
       },
     });
   }

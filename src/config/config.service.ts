@@ -4,6 +4,7 @@ import { parseListUtil } from '@/util';
 import {
   AppConfig,
   AuthConfig,
+  CacheConfig,
   DbConfig,
   Logging,
   MicroserviceConfig,
@@ -13,6 +14,7 @@ import {
 export class ConfigService {
   readonly app: AppConfig;
   readonly auth: AuthConfig;
+  readonly cache: CacheConfig;
   readonly db: DbConfig;
   readonly logging: Logging;
   readonly walletMs: MicroserviceConfig;
@@ -29,6 +31,11 @@ export class ConfigService {
 
     this.db = {
       url: nestConfigService.getOrThrow('DATABASE_URL'),
+    };
+
+    this.cache = {
+      url: nestConfigService.getOrThrow('REDIS_URL'),
+      ttl: parseInt(nestConfigService.getOrThrow('CACHE_TTL'), 10),
     };
 
     this.walletMs = {
