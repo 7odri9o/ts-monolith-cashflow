@@ -11,7 +11,7 @@ COPY src src
 COPY prisma prisma
 
 RUN pnpm prisma:generate
-RUN npm run build
+RUN pnpm build
 
 FROM node:18
 
