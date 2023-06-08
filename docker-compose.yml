@@ -1,0 +1,20 @@
+version: '3.8'
+name: 'ts-monolith-cashflow'
+
+services:
+  cashflow:
+    container_name: cashflow
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:${PORT}'
+    networks:
+      - ts-monolith-cashflow
+
+networks:
+  ts-monolith-cashflow:
+    name: ts-monolith-cashflow
+    driver: bridge
