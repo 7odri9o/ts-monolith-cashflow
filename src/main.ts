@@ -4,6 +4,7 @@ import { APP_INTERCEPTOR, NestFactory } from '@nestjs/core';
 import { ConfigService } from './config';
 import { getLoggingConfig, WinstonLoggerService } from './logger';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const loggingConfig = getLoggingConfig();
@@ -17,6 +18,7 @@ async function bootstrap() {
   app.flushLogs();
   app.use(cookieParser());
   app.setGlobalPrefix('/api');
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const config = app.get<ConfigService>(ConfigService);
   const { port } = config.app;

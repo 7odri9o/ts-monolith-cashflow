@@ -10,9 +10,16 @@ import { LoggerMiddleware } from './middlewares';
 import { AuthModule } from './auth';
 import { HealthcheckModule } from './healthcheck';
 import { UsersModule } from './users';
+import { CashInModule } from './cash-in';
 
 @Module({
-  imports: [ConfigModule, HealthcheckModule, UsersModule, AuthModule],
+  imports: [
+    ConfigModule,
+    HealthcheckModule,
+    UsersModule,
+    AuthModule,
+    CashInModule,
+  ],
 })
 export class AppModule implements NestModule {
   private readonly logger = new Logger(AppModule.name);
