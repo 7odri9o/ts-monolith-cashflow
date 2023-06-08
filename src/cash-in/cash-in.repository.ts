@@ -7,7 +7,6 @@ export class CashInRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async create(data: CreateCashInDto) {
-    console.log(`data >>>> ${JSON.stringify(data, null, 4)}`);
     return this.databaseService.cashIn.create({
       data,
     });

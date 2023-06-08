@@ -1,7 +1,13 @@
 import { Injectable, LogLevel } from '@nestjs/common';
 import { ConfigService as NestConfigService } from '@nestjs/config';
 import { parseListUtil } from '@/util';
-import { AppConfig, AuthConfig, DbConfig, Logging } from '@/config';
+import {
+  AppConfig,
+  AuthConfig,
+  DbConfig,
+  Logging,
+  MicroserviceConfig,
+} from '@/config';
 
 @Injectable()
 export class ConfigService {
@@ -9,6 +15,7 @@ export class ConfigService {
   readonly auth: AuthConfig;
   readonly db: DbConfig;
   readonly logging: Logging;
+  readonly walletMs: MicroserviceConfig;
 
   constructor(nestConfigService: NestConfigService) {
     this.app = {
@@ -22,6 +29,11 @@ export class ConfigService {
 
     this.db = {
       url: nestConfigService.getOrThrow('DATABASE_URL'),
+    };
+
+    this.walletMs = {
+      host: nestConfigService.getOrThrow('WALLET_TCP_HOST'),
+      port: parseInt(nestConfigService.getOrThrow('WALLET_TCP_PORT'), 10),
     };
 
     let logLevels = parseListUtil(nestConfigService.getOrThrow('LOG_LEVELS'));

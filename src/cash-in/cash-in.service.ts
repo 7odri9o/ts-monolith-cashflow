@@ -1,12 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { CashInRepository } from './cash-in.repository';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { WALLET_SERVICE } from '@/constants';
 import { CreateCashInDto } from './dto';
+import { CashInRepository } from './cash-in.repository';
 
 @Injectable()
 export class CashInService {
-  constructor(private readonly cashInRepository: CashInRepository) {}
+  constructor(
+    @Inject(WALLET_SERVICE) private readonly walletClient: ClientProxy,
+    private readonly cashInRepository: CashInRepository,
+  ) {}
 
   async create(data: CreateCashInDto) {
-    return this.cashInRepository.create(data);
+    await this.cashInRepository.create(data);
   }
 }

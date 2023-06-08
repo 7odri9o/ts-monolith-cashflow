@@ -16,3 +16,8 @@ export type AuthConfig = {
   jwtSecret: string;
   jwtExpiration: number;
 };
+
+export type MicroserviceConfig = {
+  host: string;
+  port: number;
+};

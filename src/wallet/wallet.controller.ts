@@ -5,9 +5,13 @@ import {
   Get,
   Req,
   UnauthorizedException,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { JwtValidation } from '@/jwt';
 import { WalletService } from './wallet.service';
+import { UpdateWalletDto } from './dto/update-wallet.dto';
 
 @Controller('wallet')
 export class WalletController {
@@ -31,5 +35,11 @@ export class WalletController {
     }
 
     return this.walletService.get();
+  }
+
+  @MessagePattern('update_wallet')
+  @UsePipes(new ValidationPipe())
+  async update(@Payload() data: UpdateWalletDto) {
+    return this.walletService[data.operation](data.transaction);
   }
 }

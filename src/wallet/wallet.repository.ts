@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '@/database';
+import { TransactionDto } from './dto';
 
 @Injectable()
 export class WalletRepository {
@@ -11,6 +12,36 @@ export class WalletRepository {
         date: true,
         value: true,
         updatedAt: true,
+      },
+      where: {
+        id,
+      },
+    });
+  }
+
+  async decrement(id: string, data: TransactionDto) {
+    return this.databaseService.wallet.update({
+      data: {
+        value: {
+          decrement: data.value,
+        },
+        date: data.date,
+        updatedAt: new Date(),
+      },
+      where: {
+        id,
+      },
+    });
+  }
+
+  async increment(id: string, data: TransactionDto) {
+    return this.databaseService.wallet.update({
+      data: {
+        value: {
+          increment: data.value,
+        },
+        date: data.date,
+        updatedAt: new Date(),
       },
       where: {
         id,
