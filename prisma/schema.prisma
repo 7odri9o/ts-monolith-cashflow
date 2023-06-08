@@ -41,3 +41,13 @@ model CashOut {
 
   @@map("cash_out")
 }
+
+model Wallet {
+  id        String   @id
+  date      DateTime @db.Date
+  value     Decimal  @db.Money
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("wallet")
+}
