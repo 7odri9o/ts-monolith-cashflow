@@ -31,3 +31,13 @@ model CashIn {
 
   @@map("cash_in")
 }
+
+model CashOut {
+  id          Int      @id @default(autoincrement())
+  description String
+  value       Decimal  @db.Money
+  date        DateTime @db.Date
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("cash_out")
+}
