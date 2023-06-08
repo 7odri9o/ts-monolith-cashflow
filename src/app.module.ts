@@ -1,13 +1,26 @@
-import { Module, Logger } from '@nestjs/common';
+import {
+  Module,
+  Logger,
+  MiddlewareConsumer,
+  RequestMethod,
+  NestModule,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from './config';
+import { LoggerMiddleware } from './middlewares';
 
 @Module({
   imports: [ConfigModule],
 })
-export class AppModule {
+export class AppModule implements NestModule {
   private readonly logger = new Logger(AppModule.name);
 
   constructor(private readonly config: ConfigService) {}
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
 
   onModuleInit() {
     this.logger.log('Initializing %s...', AppModule.name);
