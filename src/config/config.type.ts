@@ -11,3 +11,8 @@ export type Logging = {
 export type DbConfig = {
   url: string;
 };
+
+export type AuthConfig = {
+  jwtSecret: string;
+  jwtExpiration: number;
+};
