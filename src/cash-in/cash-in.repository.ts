@@ -11,4 +11,14 @@ export class CashInRepository {
       data,
     });
   }
+
+  async findByDate(date: string) {
+    return this.databaseService.cashIn.findMany({
+      where: {
+        date: {
+          equals: new Date(date),
+        },
+      },
+    });
+  }
 }

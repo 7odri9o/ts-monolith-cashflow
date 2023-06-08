@@ -31,5 +31,6 @@ import { CashInRepository } from './cash-in.repository';
   ],
   controllers: [CashInController],
   providers: [CashInService, CashInRepository],
+  exports: [CashInService],
 })
 export class CashInModule {}

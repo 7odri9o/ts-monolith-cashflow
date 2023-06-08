@@ -11,4 +11,14 @@ export class CashOutRepository {
       data,
     });
   }
+
+  async findByDate(date: string) {
+    return this.databaseService.cashOut.findMany({
+      where: {
+        date: {
+          equals: new Date(date),
+        },
+      },
+    });
+  }
 }

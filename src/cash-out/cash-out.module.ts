@@ -31,5 +31,6 @@ import { CashOutRepository } from './cash-out.repository';
   ],
   controllers: [CashOutController],
   providers: [CashOutService, CashOutRepository],
+  exports: [CashOutService],
 })
 export class CashOutModule {}

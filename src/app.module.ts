@@ -12,6 +12,7 @@ import { ConfigModule, ConfigService } from './config';
 import { LoggerMiddleware } from './middlewares';
 import { AuthModule } from './auth';
 import { HealthcheckModule } from './healthcheck';
+import { BalanceModule } from './balance';
 import { UsersModule } from './users';
 import { CashInModule } from './cash-in';
 import { CashOutModule } from './cash-out';
@@ -23,6 +24,7 @@ import { WalletModule } from './wallet';
     HealthcheckModule,
     UsersModule,
     AuthModule,
+    BalanceModule,
     CashInModule,
     CashOutModule,
     WalletModule,
