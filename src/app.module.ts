@@ -12,6 +12,7 @@ import { HealthcheckModule } from './healthcheck';
 import { UsersModule } from './users';
 import { CashInModule } from './cash-in';
 import { CashOutModule } from './cash-out';
+import { WalletModule } from './wallet';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CashOutModule } from './cash-out';
     AuthModule,
     CashInModule,
     CashOutModule,
+    WalletModule,
   ],
 })
 export class AppModule implements NestModule {
