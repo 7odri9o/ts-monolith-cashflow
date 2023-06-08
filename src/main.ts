@@ -1,3 +1,4 @@
+import * as cookieParser from 'cookie-parser';
 import { createLogger } from 'winston';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from './config';
@@ -14,6 +15,7 @@ async function bootstrap() {
   });
 
   app.flushLogs();
+  app.use(cookieParser());
 
   const config = app.get<ConfigService>(ConfigService);
   const { port } = config.app;

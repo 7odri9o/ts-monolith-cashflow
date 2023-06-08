@@ -7,10 +7,12 @@ import {
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from './config';
 import { LoggerMiddleware } from './middlewares';
+import { AuthModule } from './auth';
 import { HealthcheckModule } from './healthcheck';
+import { UsersModule } from './users';
 
 @Module({
-  imports: [ConfigModule, HealthcheckModule],
+  imports: [ConfigModule, HealthcheckModule, UsersModule, AuthModule],
 })
 export class AppModule implements NestModule {
   private readonly logger = new Logger(AppModule.name);

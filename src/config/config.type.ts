@@ -7,3 +7,12 @@ export type AppConfig = {
 export type Logging = {
   levels: LogLevel[];
 };
+
+export type DbConfig = {
+  url: string;
+};
+
+export type AuthConfig = {
+  jwtSecret: string;
+  jwtExpiration: number;
+};
