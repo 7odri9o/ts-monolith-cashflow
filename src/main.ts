@@ -1,6 +1,6 @@
 import * as cookieParser from 'cookie-parser';
 import { createLogger } from 'winston';
-import { NestFactory } from '@nestjs/core';
+import { APP_INTERCEPTOR, NestFactory } from '@nestjs/core';
 import { ConfigService } from './config';
 import { getLoggingConfig, WinstonLoggerService } from './logger';
 import { AppModule } from './app.module';
@@ -16,6 +16,7 @@ async function bootstrap() {
 
   app.flushLogs();
   app.use(cookieParser());
+  app.setGlobalPrefix('/api');
 
   const config = app.get<ConfigService>(ConfigService);
   const { port } = config.app;
