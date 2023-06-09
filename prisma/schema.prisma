@@ -21,3 +21,33 @@ model User {
 
   @@map("users")
 }
+
+model CashIn {
+  id          Int      @id @default(autoincrement())
+  description String
+  value       Decimal  @db.Money
+  date        DateTime @db.Date
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("cash_in")
+}
+
+model CashOut {
+  id          Int      @id @default(autoincrement())
+  description String
+  value       Decimal  @db.Money
+  date        DateTime @db.Date
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("cash_out")
+}
+
+model Wallet {
+  id        String   @id
+  date      DateTime @db.Date
+  value     Decimal  @db.Money
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("wallet")
+}

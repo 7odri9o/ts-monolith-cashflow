@@ -7,11 +7,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - DOCKER_IMAGE_VERSION=${DOCKER_IMAGE_VERSION}
     depends_on:
       postgres:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     links:
       - postgres
+      - redis
     env_file:
       - .env
     ports:
@@ -36,6 +41,21 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+
+  redis:
+    image: redis:6.2-alpine
+    hostname: redis
+    container_name: redis
+    restart: always
+    ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
+    networks:
+      - ts-monolith-cashflow
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - ./infra/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
 
 networks:
   ts-monolith-cashflow:
