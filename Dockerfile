@@ -1,4 +1,6 @@
-FROM node:18 AS builder
+ARG DOCKER_IMAGE_VERSION
+
+FROM ${DOCKER_IMAGE_VERSION} AS builder
 
 WORKDIR /build
 
@@ -13,7 +15,7 @@ COPY prisma prisma
 RUN pnpm prisma:generate
 RUN pnpm build
 
-FROM node:18
+FROM ${DOCKER_IMAGE_VERSION}
 
 WORKDIR /usr/src/app
 
